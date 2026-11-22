@@ -7,95 +7,207 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
+            line-height: 1.65;
             color: #333333;
             background-color: #f8f9fa;
             margin: 0;
-            padding: 20px;
+            padding: 16px;
         }
         .container {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 40px;
+            padding: 36px 32px;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        h1 {
-            color: #ff6d00;
-            border-bottom: 2px solid #ff6d00;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #2c3e50;
-            margin-top: 25px;
-        }
-        p, li {
-            color: #555555;
-            font-size: 15px;
-        }
-        .badge {
-            display: inline-block;
-            background: #fff3e0;
-            color: #e65100;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-        .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eeeeee;
-            font-size: 13px;
-            color: #888888;
-            text-align: center;
-        }
+        h1 { color: #ff6d00; border-bottom: 2px solid #ff6d00; padding-bottom: 10px; margin-top: 0; }
+        h2 { color: #2c3e50; margin-top: 30px; font-size: 1.25em; }
+        h3 { color: #2c3e50; margin-top: 20px; font-size: 1.05em; }
+        p, li { color: #555555; font-size: 15px; }
+        li { margin-bottom: 6px; }
+        .badge { display: inline-block; background: #fff3e0; color: #e65100; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .box { background: #f4f8fb; border-left: 4px solid #2c7be5; padding: 12px 16px; border-radius: 6px; margin: 16px 0; }
+        .warn { background: #fff8e1; border-left: 4px solid #ffa000; padding: 12px 16px; border-radius: 6px; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+        th, td { border: 1px solid #e3e6ea; padding: 8px 10px; text-align: left; vertical-align: top; color: #555; }
+        th { background: #f4f6f8; color: #2c3e50; }
+        .muted { color: #888; font-size: 13px; }
+        a { color: #e65100; }
+        @media (max-width: 600px) { .container { padding: 22px 16px; } table { font-size: 13px; } }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <div class="badge">Aplikasi Resmi RALMD Digital</div>
-    <h1>Kebijakan Privasi (Privacy Policy)</h1>
-    <p><strong>Terakhir diperbarui:</strong> 28 September 2026</p>
+    <h1>Kebijakan Privasi CapWaktu</h1>
+    <span class="badge">Terakhir diperbarui: 22 November 2026</span>
 
-    <p>Selamat datang di <strong>CapWaktu</strong> ("Aplikasi"), yang dikembangkan oleh <strong>RALMD Digital</strong>. Kami sangat menghargai dan berkomitmen untuk melindungi privasi data pribadi pengguna kami. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi Anda saat menggunakan aplikasi CapWaktu.</p>
+    <p>Kebijakan Privasi ini menjelaskan data apa saja yang diproses oleh aplikasi <strong>CapWaktu</strong>
+    (paket <code>com.capwaktu.timestamp</code>, "Aplikasi") yang dikembangkan oleh <strong>RALMD Digital</strong>
+    ("kami"), untuk apa data tersebut dipakai, ke mana data dapat dikirim, dan bagaimana Anda dapat
+    mengendalikannya.</p>
 
-    <h2>1. Izin Perangkat & Data yang Kami Gunakan</h2>
-    <p>Untuk menjalankan fungsi kamera timestamp dan geotagging secara akurat, aplikasi memerlukan izin berikut:</p>
-    <ul>
-        <li><strong>Kamera (CAMERA):</strong> Digunakan semata-mata untuk mengambil foto dokumentasi dan merekam video dengan cap waktu/watermark secara langsung dari perangkat Anda.</li>
-        <li><strong>Lokasi Presisi & Perkiraan (ACCESS_FINE_LOCATION & ACCESS_COARSE_LOCATION):</strong> Digunakan untuk mendeteksi koordinat GPS (Latitude, Longitude), elevasi (mdpl), dan alamat lokasi yang dicantumkan pada stempel foto/video, serta mendeteksi keaslian sinyal GPS (anti-mock GPS). Data lokasi hanya diproses secara lokal di perangkat Anda saat aplikasi aktif.</li>
-        <li><strong>Perekam Suara (RECORD_AUDIO):</strong> Digunakan untuk merekam suara pada fitur perekaman video dan fitur opsional perintah suara (*Voice Shutter*). Rekaman suara tidak pernah diunggah ke server eksternal.</li>
-        <li><strong>Penyimpanan Media (READ_MEDIA_IMAGES / STORAGE):</strong> Digunakan untuk menyimpan hasil foto, rekaman video berstempel, laporan PDF, dan rekap CSV ke galeri penyimpanan internal perangkat Anda.</li>
-    </ul>
-
-    <h2>2. Pemrosesan Data & Keamanan Lokal</h2>
-    <p>Aplikasi CapWaktu beroperasi dengan prinsip <em>Client-Side Processing</em>:</p>
-    <ul>
-        <li>Foto, video, catatan kegiatan, dan tanda tangan digital Anda <strong>disimpan secara lokal di perangkat Anda sendiri</strong> dan tidak pernah diunggah ke server kami.</li>
-        <li>Fitur <strong>Segel Integritas SHA-256</strong> dihitung langsung di perangkat untuk memastikan keaslian foto tanpa mentransfer data gambar keluar perangkat.</li>
-    </ul>
-
-    <h2>3. Layanan Pihak Ketiga & Iklan (Google AdMob)</h2>
-    <p>Aplikasi ini menggunakan layanan periklanan dari <strong>Google AdMob (Google LLC)</strong> untuk menampilkan iklan (seperti iklan layar penuh dan iklan video berhadiah). Google AdMob dapat mengumpulkan pengidentifikasi perangkat anonim (*Advertising ID*) dan data diagnostik sesuai dengan <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Kebijakan Privasi Google</a>.</p>
-
-    <h2>4. Privasi Anak-Anak</h2>
-    <p>Aplikasi CapWaktu dirancang untuk keperluan pekerjaan, absensi kedinasan, dan dokumentasi proyek oleh kalangan pekerja/profesional berusia 18 tahun ke atas. Kami tidak secara sengaja mengumpulkan data pribadi dari anak-anak di bawah usia 13 tahun.</p>
-
-    <h2>5. Kontak Pengembang</h2>
-    <p>Jika Anda memiliki pertanyaan mengenai Kebijakan Privasi ini, silakan hubungi kami melalui:</p>
-    <ul>
-        <li><strong>Pengembang:</strong> RALMD Digital</li>
-        <li><strong>Email:</strong> support@ralmd.digital (atau email akun pengembang Anda)</li>
-    </ul>
-
-    <div class="footer">
-        &copy; 2026 RALMD Digital. Seluruh hak cipta dilindungi undang-undang.
+    <div class="box">
+        <strong>Ringkasan singkat</strong>
+        <ul>
+            <li>Kami <strong>tidak memiliki server</strong> untuk menampung foto, video, maupun data presensi Anda.
+                Foto dan video disimpan di perangkat Anda.</li>
+            <li>Data presensi (foto, nama, NIP/ID, lokasi, dll.) <strong>hanya dikirim bila Anda mengaktifkan
+                fitur Presensi</strong>, dan dikirim ke alamat Google Sheets atau server kantor yang
+                <strong>Anda atau instansi Anda tentukan sendiri</strong>, bukan ke kami.</li>
+            <li>Beberapa fitur memakai layanan pihak ketiga yang menerima koordinat lokasi (untuk alamat, cuaca,
+                dan peta mini). Iklan disediakan oleh Google AdMob.</li>
+        </ul>
     </div>
-</div>
 
+    <h2>1. Izin perangkat dan kegunaannya</h2>
+    <table>
+        <tr><th>Izin</th><th>Kegunaan</th></tr>
+        <tr><td>Kamera</td><td>Mengambil foto dan merekam video yang diberi stempel waktu dan lokasi.</td></tr>
+        <tr><td>Lokasi presisi &amp; perkiraan</td><td>Mencantumkan koordinat, ketinggian, dan alamat pada stempel;
+            menampilkan cuaca dan peta mini; mendeteksi lokasi palsu (fake GPS); menghitung jarak ke kantor bila
+            diatur. Lokasi hanya dibaca saat Aplikasi dipakai.</td></tr>
+        <tr><td>Mikrofon</td><td>Merekam suara pada video, dan fitur opsional <em>Jepret Suara</em> (perintah suara).</td></tr>
+        <tr><td>Penyimpanan / media</td><td>Menyimpan foto, video, laporan PDF, dan rekap ke penyimpanan perangkat
+            (perangkat Android lama).</td></tr>
+        <tr><td>Notifikasi, alarm tepat waktu, mulai saat perangkat menyala</td><td>Menampilkan pengingat (misalnya
+            pengingat presensi) dan menjadwalkannya kembali setelah perangkat dinyalakan ulang.</td></tr>
+        <tr><td>Internet &amp; status jaringan</td><td>Mengirim presensi (bila diaktifkan), mengambil alamat, cuaca,
+            peta, sinkronisasi waktu, iklan, dan mengirim ulang antrean presensi saat sinyal kembali.</td></tr>
+    </table>
+
+    <h2>2. Data yang diproses dan disimpan di perangkat Anda</h2>
+    <ul>
+        <li><strong>Foto dan video</strong> beserta stempelnya, disimpan di folder Aplikasi pada perangkat Anda.
+            Bila Anda memilih, salinan dapat disimpan ke galeri umum perangkat (pengaturan "Mode Privat" dan
+            "Simpan foto asli").</li>
+        <li><strong>Data profil yang Anda isi</strong>: nama, NIP/ID pegawai, instansi, unit kerja, kegiatan, logo,
+            dan tanda tangan. Data ini disimpan di perangkat untuk ditampilkan pada stempel.</li>
+        <li><strong>Deteksi wajah</strong>: Aplikasi mendeteksi posisi wajah di dalam foto menggunakan Google ML Kit
+            yang berjalan <strong>sepenuhnya di perangkat</strong>, untuk mode wajah, penanda "Wajah ✓", dan
+            pemeriksaan foto presensi (misalnya foto tanpa wajah atau buram). Aplikasi <strong>tidak</strong>
+            melakukan pengenalan identitas wajah, tidak membuat atau menyimpan data biometrik, dan tidak mengirim
+            hasil deteksi wajah ke mana pun.</li>
+        <li><strong>Segel verifikasi</strong> (kode segel/SHA-256) dihitung di perangkat dari isi stempel.</li>
+        <li><strong>Antrean presensi offline</strong>: bila presensi gagal terkirim, foto dan data presensinya disimpan
+            sementara di perangkat sampai berhasil terkirim.</li>
+    </ul>
+
+    <h2>3. Data yang dikirim keluar perangkat (hanya bila fitur diaktifkan)</h2>
+
+    <h3>3.1 Presensi</h3>
+    <p>Bila Anda mengaktifkan Integrasi Presensi dan menekan <em>Kirim Presensi</em>, Aplikasi mengirim data berikut
+    ke <strong>alamat yang Anda masukkan</strong> (Google Apps Script/Google Sheets milik Anda atau kantor Anda, atau
+    server presensi instansi):</p>
+    <ul>
+        <li>foto presensi (dikompres), nama, NIP/ID pegawai, instansi/unit kerja;</li>
+        <li>jenis presensi (masuk, pulang, istirahat, dll.), catatan kegiatan, tanggal dan jam;</li>
+        <li>koordinat, ketinggian, akurasi GPS, alamat, status lokasi palsu, penanda wajah, dan kode segel;</li>
+        <li>merek dan model perangkat.</li>
+    </ul>
+    <p>Data tersebut dikelola oleh pemilik Google Sheets atau server tujuan (Anda atau admin instansi Anda), sesuai
+    kebijakan masing-masing. <strong>Kami tidak menerima, tidak menyimpan, dan tidak dapat mengakses</strong> data
+    presensi tersebut.</p>
+
+    <h3>3.2 Cadangan Google Drive (opsional)</h3>
+    <p>Bila Anda mengaktifkan cadangan ke Google Drive, foto beserta keterangan (kegiatan, nama petugas, kode segel)
+    dikirim ke skrip Google Apps Script milik Anda dan disimpan di Google Drive Anda.</p>
+
+    <h3>3.3 Mode Tim</h3>
+    <p>Bila Anda bergabung dengan tim instansi (misalnya melalui QR presensi), Aplikasi mengunduh pengaturan tim
+    (nama instansi, logo, jam kerja, lokasi dan radius kantor) dari Google Sheets milik instansi Anda.</p>
+
+    <h3>3.4 Berbagi</h3>
+    <p>Foto, video, laporan, atau struk presensi hanya dibagikan ke aplikasi lain (misalnya WhatsApp) bila Anda
+    sendiri yang memilih untuk membagikannya.</p>
+
+    <h2>4. Layanan pihak ketiga</h2>
+    <p>Layanan berikut dipakai untuk menjalankan fitur Aplikasi. Seperti setiap koneksi internet, layanan tersebut
+    juga dapat menerima alamat IP perangkat Anda.</p>
+    <table>
+        <tr><th>Layanan</th><th>Data yang dikirim</th><th>Tujuan</th></tr>
+        <tr><td>Google AdMob (Google LLC)</td><td>ID iklan, informasi perangkat, data diagnostik dan interaksi iklan</td>
+            <td>Menampilkan iklan. <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Cara Google memakai data iklan</a></td></tr>
+        <tr><td>OpenStreetMap Nominatim, dan layanan geocoder Android (Google)</td><td>Koordinat lokasi</td>
+            <td>Mengubah koordinat menjadi alamat pada stempel</td></tr>
+        <tr><td>Open-Meteo</td><td>Koordinat lokasi (dibulatkan)</td><td>Menampilkan cuaca dan suhu pada stempel</td></tr>
+        <tr><td>Google Maps / CARTO</td><td>Nomor petak peta di sekitar lokasi Anda</td><td>Menampilkan gambar peta mini</td></tr>
+        <tr><td>Google (sinkronisasi waktu)</td><td>Permintaan koneksi tanpa data pribadi</td><td>Mendapatkan waktu resmi untuk presensi</td></tr>
+        <tr><td>Layanan pengenal suara perangkat (umumnya Google)</td><td>Suara Anda saat Jepret Suara aktif</td>
+            <td>Mengenali perintah suara. Tergantung perangkat, suara dapat diproses secara online oleh penyedia layanan
+            tersebut. Aplikasi tidak menyimpan rekaman suara ini.</td></tr>
+        <tr><td>Google Play</td><td>Data sesuai ketentuan Google Play</td><td>Layanan lokasi, ulasan dalam aplikasi,
+            dan statistik kerusakan aplikasi</td></tr>
+    </table>
+    <p>Anda dapat menyetel ulang atau menonaktifkan personalisasi ID iklan melalui <em>Setelan Android → Google →
+    Iklan</em> (nama menu dapat berbeda tergantung perangkat).</p>
+
+    <h2>5. Penyimpanan dan penghapusan data</h2>
+    <ul>
+        <li>Data di perangkat (foto, video, profil, antrean) disimpan sampai Anda menghapusnya di Aplikasi.</li>
+    </ul>
+    <div class="warn">
+        <strong>Penting:</strong> menghapus (uninstall) Aplikasi juga menghapus foto dan video yang tersimpan di
+        folder Aplikasi. Salinan yang sudah disimpan ke galeri umum perangkat, dibagikan, atau terkirim ke Google
+        Sheets/server kantor tidak ikut terhapus. Cadangkan foto penting sebelum menghapus Aplikasi.
+    </div>
+    <ul>
+        <li>Data presensi yang sudah terkirim disimpan dan dihapus oleh pemilik Google Sheets atau server tujuan.
+            Untuk menghapusnya, hubungi admin instansi Anda.</li>
+    </ul>
+
+    <h2>6. Keamanan</h2>
+    <ul>
+        <li>Koneksi ke layanan pihak ketiga dan Google Apps Script memakai HTTPS (terenkripsi).</li>
+        <li>Keamanan pengiriman presensi ke server kantor bergantung pada alamat server yang Anda gunakan. Kami
+            menyarankan alamat yang diawali <code>https://</code>.</li>
+        <li>Stempel dilengkapi kode segel untuk membantu memeriksa keaslian foto.</li>
+    </ul>
+
+    <h2>7. Hak Anda</h2>
+    <p>Sesuai Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi, Anda berhak mengakses, memperbaiki,
+    dan menghapus data pribadi Anda. Data di perangkat dapat Anda ubah atau hapus langsung di Aplikasi. Untuk data
+    presensi yang sudah terkirim, ajukan permintaan kepada pengelola Google Sheets atau server tujuan (admin instansi
+    Anda). Anda juga dapat mencabut izin Aplikasi kapan saja melalui Setelan Android.</p>
+
+    <h2>8. Privasi anak</h2>
+    <p>Aplikasi ditujukan untuk keperluan pekerjaan dan dokumentasi oleh pengguna dewasa. Kami tidak dengan sengaja
+    mengumpulkan data pribadi anak di bawah 13 tahun.</p>
+
+    <h2>9. Perubahan kebijakan</h2>
+    <p>Kebijakan ini dapat diperbarui mengikuti perubahan fitur Aplikasi. Tanggal pembaruan terakhir tercantum di
+    bagian atas halaman ini.</p>
+
+    <h2>10. Kontak</h2>
+    <ul>
+        <li>Pengembang: RALMD Digital</li>
+        <li>Email: <a href="mailto:EMAIL_KONTAK">EMAIL_KONTAK</a></li>
+    </ul>
+
+    <hr style="margin-top:36px;border:none;border-top:1px solid #eee">
+
+    <h2>Privacy Policy (English summary)</h2>
+    <p class="muted">The Indonesian version above is the primary version.</p>
+    <ul>
+        <li>CapWaktu (<code>com.capwaktu.timestamp</code>) by RALMD Digital has <strong>no developer server</strong>.
+            Photos and videos are stored on your device.</li>
+        <li><strong>Attendance (optional):</strong> when you enable it and tap Send, the app sends a compressed photo,
+            name, employee ID, organization/unit, attendance type, notes, date/time, coordinates, altitude, GPS accuracy,
+            address, fake-GPS flag, face flag, seal code, and device make/model to the Google Sheets script or office
+            server URL <strong>that you or your organization configure</strong>. We never receive this data.
+            Optional Google Drive backup and Team Mode work with your/your organization's own Google Apps Script.</li>
+        <li><strong>Face detection</strong> runs entirely on-device (Google ML Kit). No face recognition, no biometric
+            templates, nothing is uploaded.</li>
+        <li><strong>Third parties:</strong> Google AdMob (advertising ID, device and diagnostic data); OpenStreetMap
+            Nominatim and the Android geocoder (coordinates → address); Open-Meteo (rounded coordinates → weather);
+            Google Maps/CARTO (map tile numbers near your location); Google time sync (no personal data); the device
+            speech service for optional Voice Shutter (may be processed online by its provider); Google Play services.</li>
+        <li>Uninstalling the app deletes photos/videos stored in the app folder; copies saved to the public gallery,
+            shared, or sent to Sheets/servers are not deleted. Data already sent is managed by the destination owner.</li>
+        <li>Not directed to children under 13. Contact: RALMD Digital, <a href="mailto:EMAIL_KONTAK">EMAIL_KONTAK</a>.</li>
+    </ul>
+
+    <p class="muted" style="margin-top:30px">© 2026 RALMD Digital.</p>
+</div>
 </body>
 </html>
