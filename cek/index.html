@@ -1,1 +1,138 @@
-
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Cek Keaslian Foto - CapWaktu</title>
+    <style>
+        :root { --oranye: #ff6d00; --hijau: #1b873f; --merah: #c62828; --kuning: #b26a00; --biru: #1a5fb4; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+               line-height: 1.55; color: #333; background: #f1f3f6; margin: 0; padding: 0 0 24px; }
+        header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff;
+                 border-bottom: 1px solid #e6e8ec; position: sticky; top: 0; }
+        header .logo { width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(#ff8c28, #f05a00);
+                       color: #fff; display: grid; place-items: center; font-size: 19px; }
+        header b { font-size: 18px; flex: 1; }
+        header a { font-size: 13px; color: #fff; background: #3d5a80; padding: 7px 12px; border-radius: 18px; text-decoration: none; }
+        main { max-width: 640px; margin: 0 auto; padding: 14px 16px; }
+        .status { border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
+        .status h1 { margin: 0 0 2px; font-size: 19px; }
+        .status p { margin: 0; font-size: 14px; }
+        .ok { background: #e8f5ec; border: 1.5px solid var(--hijau); } .ok h1 { color: var(--hijau); }
+        .bad { background: #fdecea; border: 1.5px solid var(--merah); } .bad h1 { color: var(--merah); }
+        .info { background: #eef4fb; border: 1.5px solid #2c7be5; } .info h1 { color: var(--biru); }
+        .card { background: #fff; border-radius: 14px; margin-bottom: 14px; overflow: hidden; border: 1px solid #e6e8ec; }
+        .card h2 { margin: 0; padding: 13px 16px; font-size: 16px; color: #3d5a80; background: #f6f8fb; border-bottom: 1px solid #e6e8ec; }
+        .map { height: 220px; background: #e9edf2; display: grid; place-items: center; }
+        .map iframe { width: 100%; height: 100%; border: 0; }
+        .map button { border: 0; background: #fff; color: #3d5a80; font-weight: 600; padding: 10px 16px;
+                      border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.12); font-size: 14px; cursor: pointer; }
+        .row { padding: 10px 16px; border-bottom: 1px solid #f0f1f3; }
+        .row:last-child { border-bottom: 0; }
+        .row small { display: block; color: #888; font-size: 12.5px; }
+        .row b { font-size: 15.5px; color: #222; font-weight: 600; }
+        .seal { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 17px; letter-spacing: .5px;
+                background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 6px; }
+        .flag-warn { color: var(--kuning); } .flag-bad { color: var(--merah); } .flag-ok { color: var(--hijau); }
+        a.btn { display: block; margin: 12px 16px 14px; padding: 12px; border-radius: 10px; background: #2f6fe4; color: #fff;
+                text-decoration: none; font-weight: 700; text-align: center; font-size: 15px; }
+        .steps { padding: 12px 16px; font-size: 14px; }
+        .steps ol { margin: 6px 0 0 18px; padding: 0; }
+        .muted { color: #888; font-size: 12.5px; margin-top: 6px; }
+    </style>
+</head>
+<body>
+<header><div class="logo">📷</div><b>CapWaktu</b><a href="https://play.google.com/store/apps/details?id=com.capwaktu.timestamp" rel="noopener">Dapatkan Aplikasi</a></header>
+<main>
+    <div id="hasil"><div class="status info"><h1>Memeriksa…</h1><p>Mohon tunggu sebentar.</p></div></div>
+    <p class="muted">Keaslian diperiksa di browser Anda; data dari tautan tidak dikirim ke server kami. Peta baru dimuat
+        dari Google Maps bila Anda menekan "Tampilkan peta". Pemeriksaan ini memastikan data stempel dibuat oleh aplikasi
+        CapWaktu dan tidak diubah; ini tidak menilai isi pemandangan di foto. <a href="../">Kebijakan Privasi</a></p>
+</main>
+<script>
+const PUBLIC_KEY_SPKI = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEpReH7hzO2pTqwnuoTqCgYbRrXG75zaXXgsxGkVOtQAj6ObI/alKgZGpSdQE+XBMpQnHW72FKCRySHshCI9jWxQ==";
+const HARI = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+const BULAN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+const el = document.getElementById("hasil");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function b64urlToBytes(s) {
+    s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "=";
+    const bin = atob(s); const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+}
+function show(kind, title, body, extra) { el.innerHTML = `<div class="status ${kind}"><h1>${title}</h1><p>${body}</p></div>` + (extra || ""); }
+function zona(offMin) {
+    if (offMin === 420) return "WIB"; if (offMin === 480) return "WITA"; if (offMin === 540) return "WIT";
+    const h = offMin / 60; return "UTC" + (h >= 0 ? "+" : "") + h;
+}
+function formatWaktu(epoch, offsetMin, label) {
+    const d = new Date((epoch + offsetMin * 60) * 1000); const p = n => String(n).padStart(2, "0");
+    return `${HARI[d.getUTCDay()]}, ${d.getUTCDate()} ${BULAN[d.getUTCMonth()]} ${d.getUTCFullYear()} · ` +
+           `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())} ${esc(label)}`;
+}
+/** v2 (biner 19 bita + tanda tangan 64) atau v1 (teks "data.tandatangan"). */
+function parse(hash) {
+    const parts = hash.split(".");
+    if (parts.length === 1) {
+        const all = b64urlToBytes(parts[0]);
+        if (all.length !== 83 || all[0] !== 2) return null;
+        const data = all.slice(0, 19), sig = all.slice(19);
+        const v = new DataView(data.buffer);
+        const seal = Array.from(data.slice(13, 17)).map(b => b.toString(16).padStart(2, "0").toUpperCase()).join("");
+        const flags = data[17], off = v.getInt8(18) * 15;
+        return { data, sig, t: v.getUint32(1), lat: (v.getInt32(5) / 1e5).toFixed(5), lon: (v.getInt32(9) / 1e5).toFixed(5),
+                 seal: `CW-${seal.slice(0,4)}-${seal.slice(4)}`, gallery: !!(flags & 1), mock: !!(flags & 2), off, label: zona(off) };
+    }
+    if (parts.length === 2) {
+        const data = b64urlToBytes(parts[0]), sig = b64urlToBytes(parts[1]);
+        const f = new TextDecoder().decode(data).split("|");
+        if (f[0] !== "1" || f.length < 9) return null;
+        return { data, sig, t: parseInt(f[1], 10), lat: f[2], lon: f[3], seal: f[4], gallery: f[5] === "G", mock: f[6] === "M",
+                 off: parseInt(f[7], 10) || 0, label: f[8] };
+    }
+    return null;
+}
+function tampilkanPeta(lat, lon) {
+    document.getElementById("peta").innerHTML =
+        `<iframe loading="lazy" referrerpolicy="no-referrer" src="https://maps.google.com/maps?q=${lat},${lon}&z=16&output=embed"></iframe>`;
+}
+async function main() {
+    const hash = decodeURIComponent(location.hash.replace(/^#/, ""));
+    if (!hash) { show("info", "Pindai QR atau buka tautan dari foto CapWaktu",
+        "Halaman ini memeriksa keaslian stempel foto CapWaktu. Pindai kode QR di stempel foto, atau ketuk tautan yang dikirim bersama foto."); return; }
+    if (!window.crypto || !crypto.subtle) { show("info", "Browser tidak mendukung", "Buka halaman ini dengan Chrome/Safari versi terbaru."); return; }
+    let r = null; try { r = parse(hash); } catch (e) { r = null; }
+    if (!r) { show("bad", "❌ Tautan tidak dikenali", "Tautan/QR ini bukan Cek Keaslian CapWaktu, atau terpotong saat disalin/dipindai."); return; }
+    let valid = false;
+    try {
+        const key = await crypto.subtle.importKey("spki", b64urlToBytes(PUBLIC_KEY_SPKI.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")),
+            { name: "ECDSA", namedCurve: "P-256" }, false, ["verify"]);
+        valid = await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, key, r.sig, r.data);
+    } catch (e) { valid = false; }
+    if (!valid) { show("bad", "❌ Tidak cocok",
+        "Tanda tangan digital tidak cocok: data telah diubah, atau tautan ini tidak dibuat oleh aplikasi CapWaktu. Jangan jadikan foto ini sebagai bukti tanpa pemeriksaan lain."); return; }
+    const asal = r.gallery ? '<span class="flag-warn">Foto dari galeri (bukan jepretan langsung)</span>' : '<span class="flag-ok">Jepretan langsung kamera CapWaktu</span>';
+    const gps = r.mock ? '<span class="flag-bad">⚠️ Lokasi palsu (fake GPS) terdeteksi</span>' : '<span class="flag-ok">GPS asli</span>';
+    const arah = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(r.lat)},${encodeURIComponent(r.lon)}`;
+    show("ok", "✅ Stempel asli CapWaktu", "Data ditandatangani aplikasi CapWaktu saat foto dibuat dan tidak diubah sejak itu.",
+        `<div class="card"><h2>Lokasi Foto</h2>
+            <div class="map" id="peta"><button onclick="tampilkanPeta('${esc(r.lat)}','${esc(r.lon)}')">🗺️ Tampilkan peta</button></div>
+            <div class="row"><small>GPS</small><b>${esc(r.lat)}, ${esc(r.lon)}</b></div>
+            <div class="row"><small>Status GPS</small><b>${gps}</b></div>
+            <a class="btn" href="${arah}" target="_blank" rel="noopener">➤ Petunjuk arah</a></div>
+         <div class="card"><h2>Keaslian</h2>
+            <div class="row"><small>Waktu foto</small><b>${formatWaktu(r.t, r.off, r.label)}</b></div>
+            <div class="row"><small>Kode segel</small><b><span class="seal">${esc(r.seal)}</span></b></div>
+            <div class="row"><small>Asal foto</small><b>${asal}</b></div>
+            <div class="steps"><b>Cocokkan dengan foto:</b><ol>
+                <li>Kode segel di stempel harus <b>sama persis</b> dengan <span class="seal">${esc(r.seal)}</span>.</li>
+                <li>Jam & tanggal di stempel harus sama dengan waktu di atas.</li>
+                <li>Jika ada yang berbeda, stempel pada foto telah diubah.</li></ol></div></div>`);
+}
+main();
+</script>
+</body>
+</html>
