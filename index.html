@@ -40,7 +40,7 @@
 <body>
 <div class="container">
     <h1>Kebijakan Privasi CapWaktu</h1>
-    <span class="badge">Terakhir diperbarui: 22 November 2026</span>
+    <span class="badge">Terakhir diperbarui: 28 November 2026</span>
 
     <p>Kebijakan Privasi ini menjelaskan data apa saja yang diproses oleh aplikasi <strong>CapWaktu</strong>
     (paket <code>com.capwaktu.timestamp</code>, "Aplikasi") yang dikembangkan oleh <strong>RALMD Digital</strong>
@@ -121,6 +121,20 @@
     <p>Foto, video, laporan, atau struk presensi hanya dibagikan ke aplikasi lain (misalnya WhatsApp) bila Anda
     sendiri yang memilih untuk membagikannya.</p>
 
+    <h3>3.5 QR Cek Keaslian (opsional)</h3>
+    <p>Bila Anda menyalakan QR pada stempel, kode QR di foto memuat <strong>waktu foto, koordinat lokasi, kode segel,
+    asal foto (kamera langsung/galeri), status GPS, dan zona waktu</strong> yang ditandatangani secara digital oleh
+    Aplikasi. QR <strong>tidak memuat nama maupun NIP</strong>. Siapa pun yang memindai QR membuka halaman
+    <a href="cek/">Cek Keaslian</a>; pemeriksaan dilakukan di browser pemindai dan data QR (bagian setelah tanda
+    "#" pada alamat) <strong>tidak dikirim ke server kami</strong>. Peta lokasi baru dimuat dari Google Maps bila
+    pemindai menekan "Tampilkan peta". Tautan yang sama ikut dalam teks saat foto dibagikan (mis. WhatsApp) — hanya
+    bila Anda sendiri membagikannya. Data di QR/tautan sama dengan yang sudah tercetak di stempel foto.</p>
+
+    <h3>3.6 Fitur AI di perangkat</h3>
+    <p>Pengenal adegan kamera dan pembaca angka meteran memakai Google ML Kit yang berjalan
+    <strong>di perangkat</strong>. Gambar tidak dikirim keluar perangkat untuk fitur ini; modelnya diunduh oleh
+    Layanan Google Play.</p>
+
     <h2>4. Layanan pihak ketiga</h2>
     <p>Layanan berikut dipakai untuk menjalankan fitur Aplikasi. Seperti setiap koneksi internet, layanan tersebut
     juga dapat menerima alamat IP perangkat Anda.</p>
@@ -196,6 +210,9 @@
             address, fake-GPS flag, face flag, seal code, and device make/model to the Google Sheets script or office
             server URL <strong>that you or your organization configure</strong>. We never receive this data.
             Optional Google Drive backup and Team Mode work with your/your organization's own Google Apps Script.</li>
+        <li><strong>Authenticity QR (optional):</strong> contains photo time, coordinates, seal code, origin, GPS status and
+            time zone, digitally signed by the app — no name or ID number. It is checked in the scanner's browser; the data
+            after "#" is not sent to our servers (a Google map loads only if the viewer taps "Show map"). Scene detection and meter reading run on-device (Google ML Kit).</li>
         <li><strong>Face detection</strong> runs entirely on-device (Google ML Kit). No face recognition, no biometric
             templates, nothing is uploaded.</li>
         <li><strong>Third parties:</strong> Google AdMob (advertising ID, device and diagnostic data); OpenStreetMap
